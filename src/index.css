@@ -1,0 +1,19 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@font-face {
+  font-family: "Alarm";
+  src: url("./font/alarm_clock.ttf");
+}
+
+@font-face {
+  font-family: "Casino";
+  src: url("./font/Casino.ttf");
+}
+
+@font-face {
+  font-family: "Clarendon";
+  src: url("./font/Clarendon-Bold.ttf");
+}
+
