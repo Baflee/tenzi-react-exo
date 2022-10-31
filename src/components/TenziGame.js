@@ -1,7 +1,11 @@
-import React, { useState, useEffect } from "react";
-import DicesButton from "./DicesButton";
+import React, { useState, useEffect } from 'react'
+import DicesButton from './DicesButton'
 
 function TenziGame() {
+  const [leastRolls, setLeastRolls] = useState(0)
+  const [rolls, setRolls] = useState(0)
+  const [bestTimer, setBestTimer] = useState(0)
+  const [timer, setTimer] = useState(0)
   const [dices, setDices] = useState([
     ...Array(10)
       .fill({ id: 0, value: 0, isLocked: false })
@@ -11,9 +15,9 @@ function TenziGame() {
         id: id,
         value: Math.floor(Math.random() * 6) + 1,
       })),
-  ]);
+  ])
 
-  const [tenziWin, setTenziWin] = React.useState(false);
+  const [tenziWin, setTenziWin] = React.useState(false)
 
   function keepDice(diceNumber) {
     setDices((prevState) => {
@@ -22,16 +26,17 @@ function TenziGame() {
           return {
             ...dice,
             isLocked: !dice.isLocked,
-          };
+          }
         } else {
-          return dice;
+          return dice
         }
-      });
-    });
-    console.log("aaaaaaaa " + JSON.stringify(dices));
+      })
+    })
+    console.log('aaaaaaaa ' + JSON.stringify(dices))
   }
 
-  function randomDices() {
+  function rollDices() {
+    setRolls(rolls + 1)
     for (var des = 0; des < 10; des++) {
       setDices(
         dices.map((dice) => {
@@ -42,53 +47,91 @@ function TenziGame() {
                 ? dice.value
                 : Math.floor(Math.random() * 6 + 1),
               isLocked: dice.isLocked,
-            };
+            }
           } else {
             return {
               ...dice,
               value: Math.floor(Math.random() * 6 + 1),
               isLocked: false,
-            };
+            }
           }
-        })
-      );
+        }),
+      )
     }
   }
 
   useEffect(() => {
-    let allNumberEqual = dices.every((v) => v.value === dices[0].value);
-    let allNumberLocked = dices.every((v) => v.isLocked === true);
+    let allNumberEqual = dices.every((v) => v.value === dices[0].value)
+    let allNumberLocked = dices.every((v) => v.isLocked === true)
+    let interval = null
+
+    interval = setInterval(() => {
+      setTimer((timer) => timer + 10)
+    }, 10)
 
     if (allNumberLocked && allNumberEqual) {
-      setTenziWin(true);
+      if (leastRolls > rolls || leastRolls === 0) {
+        setLeastRolls(rolls)
+      }
+      if (bestTimer > timer || leastRolls === 0) {
+        setBestTimer(timer)
+      }
+      setTenziWin(true)
     } else if (tenziWin) {
-      setTenziWin(false);
+      setRolls(0)
+      setTimer(0)
+      setTenziWin(false)
     }
-  }, [dices]);
+  }, [dices])
 
   return (
     <>
       <div
-        className={`flex self-center items-center justify-center flex-wrap max-w-md gap-5
+        className={`flex self-center items-center justify-center grid grid-cols-5 gap-3 pt-2
 `}
       >
         <DicesButton dicesArray={dices} buttonKeep={keepDice} />
       </div>
-{/*       <div
-        className={`font-clarendon bg-amber-800 flex `}
+      <div
+        className={`font-verdana bg-white border-t-8 border-t-black flex self-center items-center justify-center mt-3.5 gap-24`}
       >
+        <img src="/images/Logo.png" className={`object-scale-down	`}></img>
+        <div
+          className={`shadow-inner shadow-black p-2 flex self-center items-center justify-center`}
+        >
+          Best Timer : {('0' + Math.floor((bestTimer / 60000) % 60)).slice(-2)}.
+          {('0' + Math.floor((bestTimer / 1000) % 60)).slice(-2)}.
+          {('0' + ((bestTimer / 10) % 100)).slice(-2)}
+        </div>
+        <div
+          className={`shadow-inner shadow-black p-2 flex self-center items-center justify-center`}
+        >
+          Actual Timer : {('0' + Math.floor((timer / 60000) % 60)).slice(-2)}.
+          {('0' + Math.floor((timer / 1000) % 60)).slice(-2)}.
+          {('0' + ((timer / 10) % 100)).slice(-2)}
+        </div>{' '}
+        <div
+          className={`shadow-inner shadow-black p-2 flex self-center items-center justify-center`}
+        >
+          Actual Roll : {rolls}
+        </div>{' '}
+        <div
+          className={`shadow-inner shadow-black p-2 flex self-center items-center justify-center`}
+        >
+          Least Roll : {leastRolls}
+        </div>
         <button
           type="button"
-          onClick={() => randomDices()}
-          className={`p-5 flex w-32 h-32 m-8 items-center text-xl drop-shadow-xl	text-white font-semibold bg-zinc-900 rounded-full	${
-            tenziWin ? "bg-green-400" : "bg-red-600"
+          onClick={() => rollDices()}
+          className={`p-3.5 flex w-36 h-36 my-24 shadow-xl shadow-black items-center text-xl text-white font-verdana rounded-full	${
+            tenziWin ? 'bg-blue-400' : 'bg-red-600'
           }`}
         >
-          {tenziWin === true ? "Reset le jeu !" : "Lancer les des !"}
+          {tenziWin === true ? 'TEST FINISH "RESET" ' : 'RESHUFFLE'}
         </button>
-      </div> */}
+      </div>
     </>
-  );
+  )
 }
 
-export default TenziGame;
+export default TenziGame

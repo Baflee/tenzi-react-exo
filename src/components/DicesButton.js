@@ -1,5 +1,5 @@
-import React from "react";
-import keepDice from "./TenziGame";
+import React from 'react'
+import keepDice from './TenziGame'
 
 function dicesButton(props) {
   const buttons = props.dicesArray.map((dice) => (
@@ -7,14 +7,13 @@ function dicesButton(props) {
       key={dice.id}
       index={dice.id}
       className={`${
-        dice.isLocked ? "text-green-400" : "text-red-600"
-      } flex p-5 text-4xl font-semibold bg-white border-4 border-black`}
+        dice.isLocked ? 'border-blue-600' : 'border-black'
+      } flex py-36 px-28 bg-dice${dice.value}
+      } bg-cover border border-4 rounded-lg bg-black text-4xl mx-auto font-semibold text-justify`}
       onClick={() => props.buttonKeep(dice.id)}
-    >
-      {dice.value}
-    </div>
-  ));
-  return buttons;
+    ></div>
+  ))
+  return buttons
 }
 
-export default dicesButton;
+export default dicesButton
