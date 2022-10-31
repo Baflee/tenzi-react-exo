@@ -1,7 +1,6 @@
 import React from 'react'
-import keepDice from './TenziGame'
 
-function dicesButton(props) {
+function DicesButton(props) {
   const buttons = props.dicesArray.map((dice) => (
     <div
       key={dice.id}
@@ -16,4 +15,4 @@ function dicesButton(props) {
   return buttons
 }
 
-export default dicesButton
+export default DicesButton
