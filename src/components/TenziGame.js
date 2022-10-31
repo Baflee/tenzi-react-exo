@@ -73,7 +73,7 @@ function TenziGame() {
       if (leastRolls > rolls || leastRolls === 0) {
         setLeastRolls(rolls)
       }
-      if (bestTimer > timer || leastRolls === 0) {
+      if (bestTimer > timer || bestTimer === 0) {
         setBestTimer(timer)
       }
       setTenziWin(true)
