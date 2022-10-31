@@ -32,7 +32,6 @@ function TenziGame() {
         }
       })
     })
-    console.log('aaaaaaaa ' + JSON.stringify(dices))
   }
 
   function rollDices() {
